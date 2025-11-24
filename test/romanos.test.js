@@ -48,7 +48,7 @@ describe('Conversión de Números Romanos a Arábigos', () => {
             expect(romanToArabic('lxxiii')).toBe(73);
             expect(romanToArabic('xci')).toBe(91);
             expect(romanToArabic('ccclxv')).toBe(365);
-            expect(romanToArabic('dccxlvi')).toBe(646);
+            expect(romanToArabic('dccxlvi')).toBe(746);
             expect(romanToArabic('MMCLX')).toBe(2160);
         });
 
