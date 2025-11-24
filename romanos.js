@@ -14,6 +14,13 @@ app.get('/r2a', (req, res) => {
     return res.status(400).json({ error: 'Numero romano invalido.' });
   }
 
+  if (arabicNumber <= 0 || arabicNumber >= 4000) {
+    return res.status(400).json({
+      error: 'Numero romano fuera de rango (1-3999).',
+      arabic: arabicNumber
+      });
+  }
+
   return res.json({ arabic: arabicNumber });
 });
 
@@ -24,6 +31,10 @@ app.get('/a2r', (req, res) => {
     return res.status(400).json({ error: 'Parametro arabic requerido.' });
   }
 
+    if (arabicNumber <= 0 || arabicNumber >= 4000) {
+    return res.status(422).json({ error: 'Numero arabico fuera de rango (1-3999).' });
+  }
+
   const romanNumeral = arabicToRoman(arabicNumber);
   if (romanNumeral === null) {
     return res.status(400).json({ error: 'Numero arabico invalido.' });
@@ -32,7 +43,25 @@ app.get('/a2r', (req, res) => {
   return res.json({ roman: romanNumeral });
 });
 
-function romanToArabic(roman) {
+const romanSymbols = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
+const arabicValues = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+
+function romanToArabic(romanString) {
+  if (!romanString || typeof romanString !== 'string') return null;
+
+  const roman = romanString.toUpperCase();
+  let result = 0;
+  let i = 0; 
+
+  for (let j = 0; j < romanSymbols.length; j++) {
+    const symbol = romanSymbols[j];
+    const value = arabicValues[j];
+    while (roman.startsWith(symbol, i)) {
+      result += value;
+      i += symbol.length;
+    } 
+  }
+  return result;
 }
 
 function arabicToRoman(arabic) {
@@ -40,9 +69,8 @@ function arabicToRoman(arabic) {
 
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`Servidor de tateti escuchando en el puerto ${PORT}`);
+    console.log(`Servidor romanos-arabicos escuchando en el puerto ${PORT}`);
   });
 }
-
 
 module.exports = { app, romanToArabic, arabicToRoman };
