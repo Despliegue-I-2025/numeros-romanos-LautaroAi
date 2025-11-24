@@ -75,7 +75,7 @@ function convertDecimalToArabic(num) {
   return num.toString().split('').map(digit => decimalToArabicMap[digit]).join('');
 }
 
-// Está un poco confuso, capaz debí haberle puesto d2a para no confundir utilizando mismas inciales y nombres largos
+// Está un poco confuso, capaz debí haberle puesto d2a para no confundir al utilizar inciales similares y nombres largos.
 function parseDecimalToArabic(decimalToArabicString) {
   if (!decimalToArabicString || typeof decimalToArabicString !== 'string') return NaN;
 
@@ -96,7 +96,11 @@ function romanToArabic(roman) {
     while (romanString.startsWith(symbol, i)) {
       result += value;
       i += symbol.length;
-    } 
+    }
+  }
+  // Validación para asegurar la conversión correcta y evitar casos como: IIII.
+  if (i < romanString.length || arabicToRoman(result) !== romanString) {
+    return null;
   }
   return result;
 }
