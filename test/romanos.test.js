@@ -113,7 +113,7 @@ describe('arabicToRoman function', () => {
     });
 
     test('Maneja correctamente el máximo número válido', () => {
-        expect(arabicToRoman(3999)).toBeNull('MMMCMXCIX');
+        expect(arabicToRoman(3999)).toBe('MMMCMXCIX');
     });
 
     test('retorna null para valores no enteros', () => {
