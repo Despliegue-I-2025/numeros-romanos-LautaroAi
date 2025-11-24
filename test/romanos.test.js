@@ -12,7 +12,7 @@ describe('Conversión de Números Romanos a Arábigos', () => {
             expect(romanToArabic('M')).toBe(1000);
         });
 
-        test('Convierte símbolos romanos compuestos a números decimales correctamente', () => {
+        test('Convierte números romanos compuestos a números decimales correctamente', () => {
             expect(romanToArabic('III')).toBe(3);
             expect(romanToArabic('VI')).toBe(6);
             expect(romanToArabic('IX')).toBe(9);
@@ -72,5 +72,61 @@ describe('Conversión de Números Romanos a Arábigos', () => {
             expect(romanToArabic(null)).toBeNull();
             expect(romanToArabic(undefined)).toBeNull();
         });
+    });
+});
+
+describe('arabicToRoman function', () => {
+    test('Convierte números decimales a números romanos correctamente', () => {
+        expect(arabicToRoman(1)).toBe('I');
+        expect(arabicToRoman(5)).toBe('V');
+        expect(arabicToRoman(10)).toBe('X');
+        expect(arabicToRoman(50)).toBe('L');
+        expect(arabicToRoman(100)).toBe('C');
+        expect(arabicToRoman(500)).toBe('D');
+        expect(arabicToRoman(1000)).toBe('M');
+    });
+
+    test('Convierte números decimales compuestos a números romanos correctamente', () => {
+        expect(arabicToRoman(2)).toBe('II');
+        expect(arabicToRoman(9)).toBe('IX');
+        expect(arabicToRoman(15)).toBe('XV');
+        expect(arabicToRoman(55)).toBe('LV');
+        expect(arabicToRoman(60)).toBe('LX');
+        expect(arabicToRoman(105)).toBe('CV');
+        expect(arabicToRoman(400)).toBe('CD');
+        expect(arabicToRoman(600)).toBe('DC');
+        expect(arabicToRoman(1100)).toBe('MC');
+        expect(arabicToRoman(2000)).toBe('MM');
+    });
+
+    test('Convierte números decimales complejos a números romanos correctamente', () => {
+        expect(arabicToRoman(13)).toBe('XIII');
+        expect(arabicToRoman(39)).toBe('XXXIX');
+        expect(arabicToRoman(42)).toBe('XLII');
+        expect(arabicToRoman(77)).toBe('LXXVII');
+        expect(arabicToRoman(91)).toBe('XCI');
+        expect(arabicToRoman(345)).toBe('CCCXLV');
+        expect(arabicToRoman(851)).toBe('DCCCLI');
+        expect(arabicToRoman(1896)).toBe('MDCCCXCVI');
+        expect(arabicToRoman(2025)).toBe('MMXXV');
+        expect(arabicToRoman(3802)).toBe('MMMDCCCII');
+    });
+
+    test('Maneja correctamente el máximo número válido', () => {
+        expect(arabicToRoman(3999)).toBeNull('MMMCMXCIX');
+    });
+
+    test('retorna null para valores no enteros', () => {
+        expect(arabicToRoman(3.14)).toBeNull();
+        expect(arabicToRoman('99.82')).toBeNull();
+        expect(arabicToRoman('204,99')).toBeNull();
+    });
+
+    test('Retorna null para números fuera de rango', () => {
+        expect(arabicToRoman(0)).toBeNull();
+        expect(arabicToRoman(-1)).toBeNull();
+        expect(arabicToRoman(-100)).toBeNull();
+        expect(arabicToRoman(4000)).toBeNull();
+        expect(arabicToRoman(5000)).toBeNull();
     });
 });
