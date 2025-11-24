@@ -1,9 +1,9 @@
 {
-  "name": "tateti-random",
+  "name": "romano-arabigo",
   "version": "1.0.0",
-  "main": "tateti-random.js",
+  "main": "romanos.js",
   "scripts": {
-    "start": "node tateti-random.js",
+    "start": "node romanos.js",
     "test": "jest"
   },
   "dependencies": {
@@ -17,5 +17,20 @@
       "/node_modules/",
       "/.vercel/"
     ]
-  }
+  },
+  "description": "[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/gJA-GD-V)\r ﻿# Tateti Random",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Despliegue-I-2025/numeros-romanos-LautaroAi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Despliegue-I-2025/numeros-romanos-LautaroAi/issues"
+  },
+  "homepage": "https://github.com/Despliegue-I-2025/numeros-romanos-LautaroAi#readme"
 }
