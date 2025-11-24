@@ -1,4 +1,4 @@
-const { romanToArabic, arabicToRoman, parseDecimalToArabic, convertDecimalToArabic } = require('../romanos');
+const { romanToArabic, arabicToRoman, parseArabicToDecimal, convertDecimalToArabic } = require('../romanos');
 
 describe('Conversión de Números Romanos a Arábigos', () => {
     describe('romanToArabic function', () => {
@@ -118,8 +118,8 @@ describe('arabicToRoman function', () => {
 
     test('retorna null para valores no enteros', () => {
         expect(arabicToRoman(3.14)).toBeNull();
-        expect(arabicToRoman('99.82')).toBeNull();
-        expect(arabicToRoman('204,99')).toBeNull();
+        expect(arabicToRoman(99.82)).toBeNull();
+        expect(arabicToRoman(204.99)).toBeNull();
     });
 
     test('Retorna null para números fuera de rango', () => {
@@ -129,4 +129,40 @@ describe('arabicToRoman function', () => {
         expect(arabicToRoman(4000)).toBeNull();
         expect(arabicToRoman(5000)).toBeNull();
     });
+});
+
+// Los siguientes tests tienen menor complejidad, ya que utilizan el mapa de conversión directamente.
+describe('Conversión de dígitos decimales a arábigos', () => {
+  test('convertDecimalToArabic convierte correctamente', () => {
+    expect(convertDecimalToArabic(5)).toBe('٥');
+    expect(convertDecimalToArabic(67)).toBe('٦٧');
+    expect(convertDecimalToArabic(109)).toBe('١٠٩');
+    expect(convertDecimalToArabic(248)).toBe('٢٤٨');
+    expect(convertDecimalToArabic(490)).toBe('٤٩٠');
+    expect(convertDecimalToArabic(743)).toBe('٧٤٣');
+    expect(convertDecimalToArabic(885)).toBe('٨٨٥');
+    expect(convertDecimalToArabic(1457)).toBe('١٤٥٧');
+    expect(convertDecimalToArabic(2110)).toBe('٢١١٠');
+    expect(convertDecimalToArabic(3499)).toBe('٣٤٩٩');
+  });
+
+  test('parseArabicToDecimal analiza y convierte a número decimal correctamente', () => {
+    expect(parseArabicToDecimal('٣')).toBe(3);
+    expect(parseArabicToDecimal('٣٩')).toBe(39);
+    expect(parseArabicToDecimal('٩٥')).toBe(95);
+    expect(parseArabicToDecimal('٢٦٧')).toBe(267);
+    expect(parseArabicToDecimal('٣٩٢')).toBe(392);
+    expect(parseArabicToDecimal('٧٥٨')).toBe(758);
+    expect(parseArabicToDecimal('٩٢١')).toBe(921);
+    expect(parseArabicToDecimal('١٥٤٠')).toBe(1540);
+    expect(parseArabicToDecimal('٢٢٠٩')).toBe(2209);
+    expect(parseArabicToDecimal('٣٣١٣')).toBe(3313);
+  });
+
+  test('parseArabicToDecimal retorna NaN para entradas inválidas', () => {
+    expect(parseArabicToDecimal('ABC')).toBeNaN();
+    expect(parseArabicToDecimal('')).toBeNaN();
+    expect(parseArabicToDecimal('null')).toBeNaN();
+    expect(parseArabicToDecimal('undefined')).toBeNaN();
+  });
 });

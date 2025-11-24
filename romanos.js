@@ -11,7 +11,7 @@ app.get('/r2a', (req, res) => {
 
   const arabicNumber = romanToArabic(romanNumeral);
   if (arabicNumber === null) {
-    return res.status(400).json({ error: 'Numero romano invalido.' });
+    return res.status(422).json({ error: 'Numero romano invalido.' });
   }
 
   if (arabicNumber <= 0 || arabicNumber >= 4000) {
@@ -26,7 +26,7 @@ app.get('/r2a', (req, res) => {
 
 // Arabigos a Romanos
 app.get('/a2r', (req, res) => {
-  const arabicNumber = parseDecimalToArabic(req.query.arabic);
+  const arabicNumber = parseArabicToDecimal(req.query.arabic);
   if (isNaN(arabicNumber)) {
     return res.status(400).json({ error: 'Parametro arabic requerido.' });
   }
@@ -71,16 +71,21 @@ const arabicToDecimalMap = {
   '٨': '8',
   '٩': '9'
 };
-function convertDecimalToArabic(num) {
-  return num.toString().split('').map(digit => decimalToArabicMap[digit]).join('');
+
+function convertDecimalToArabic(decimal) {
+  return decimal.toString().split('')
+    .map(digit => decimalToArabicMap[digit])
+    .join('');
 }
 
-// Está un poco confuso, capaz debí haberle puesto d2a para no confundir al utilizar inciales similares y nombres largos.
-function parseDecimalToArabic(decimalToArabicString) {
-  if (!decimalToArabicString || typeof decimalToArabicString !== 'string') return NaN;
+// Ahora está un poco más claro y acotado (intuitivo)
+function parseArabicToDecimal(arabicString) {
+  if (!arabicString || typeof arabicString !== 'string') return NaN;
 
-  const arabicToDecimalString = decimalToArabicString.split('').map(char => arabicToDecimalMap[char] || char).join('');
-  return parseInt(arabicToDecimalString, 10);
+  const decimalString = arabicString.split('')
+    .map(char => arabicToDecimalMap[char] || char)
+    .join('');
+  return parseInt(decimalString, 10);
 }
 
 function romanToArabic(roman) {
@@ -98,10 +103,11 @@ function romanToArabic(roman) {
       i += symbol.length;
     }
   }
-  // Validación para asegurar la conversión correcta y evitar casos como: IIII.
+
   if (i < romanString.length || arabicToRoman(result) !== romanString) {
     return null;
   }
+  
   return result;
 }
 
@@ -128,4 +134,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { app, romanToArabic, arabicToRoman, parseDecimalToArabic, convertDecimalToArabic };
+module.exports = { app, romanToArabic, arabicToRoman, parseArabicToDecimal, convertDecimalToArabic };
