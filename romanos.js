@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const PORT = process.env.PORT || 3000;
+
+app.use(cors());
 
 // Romanos a Arabigos
 app.get('/r2a', (req, res) => {
