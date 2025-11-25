@@ -1,8 +1,8 @@
-const { romanToArabic, arabicToRoman, arabicToDecimal, decimalToArabic } = require('../romanos');
+const { romanToArabic, arabicToRoman } = require('../romanos');
 
 // Números romanos a arábigos
 describe('romanToArabic function', () => {
-    test('Convierte números romanos individuales a números decimales correctamente', () => {
+    test('Convierte números romanos individuales a números arábigos correctamente', () => {
         expect(romanToArabic('I')).toBe(1);
         expect(romanToArabic('V')).toBe(5);
         expect(romanToArabic('X')).toBe(10);
@@ -11,7 +11,7 @@ describe('romanToArabic function', () => {
         expect(romanToArabic('D')).toBe(500);
         expect(romanToArabic('M')).toBe(1000);
     })
-    test('Convierte números romanos compuestos a números decimales correctamente', () => {
+    test('Convierte números romanos compuestos a números arábigos correctamente', () => {
         expect(romanToArabic('III')).toBe(3);
         expect(romanToArabic('VI')).toBe(6);
         expect(romanToArabic('IX')).toBe(9);
@@ -24,7 +24,7 @@ describe('romanToArabic function', () => {
         expect(romanToArabic('CM')).toBe(900);
         expect(romanToArabic('MD')).toBe(1500);
     })
-    test('convierte números romanos complejos a números decimales correctamente', () => {
+    test('convierte números romanos complejos a números arábigos correctamente', () => {
         expect(romanToArabic('XIV')).toBe(14);
         expect(romanToArabic('XVIII')).toBe(18);
         expect(romanToArabic('XXIV')).toBe(24);
@@ -62,6 +62,7 @@ describe('romanToArabic function', () => {
     })
     test('Retorna null para entradas no válidas', () => {
         expect(romanToArabic('ABC')).toBeNull();
+        expect(romanToArabic('1234ABC')).toBeNull();
         expect(romanToArabic('')).toBeNull();
         expect(romanToArabic(null)).toBeNull();
         expect(romanToArabic(undefined)).toBeNull();
@@ -70,7 +71,7 @@ describe('romanToArabic function', () => {
 
 // Números arábigos a romanos
 describe('arabicToRoman function', () => {
-    test('Convierte números decimales a números romanos correctamente', () => {
+    test('Convierte números arábigos a números romanos correctamente', () => {
         expect(arabicToRoman(1)).toBe('I');
         expect(arabicToRoman(5)).toBe('V');
         expect(arabicToRoman(10)).toBe('X');
@@ -80,7 +81,7 @@ describe('arabicToRoman function', () => {
         expect(arabicToRoman(1000)).toBe('M');
     });
 
-    test('Convierte números decimales compuestos a números romanos correctamente', () => {
+    test('Convierte números arábigos compuestos a números romanos correctamente', () => {
         expect(arabicToRoman(2)).toBe('II');
         expect(arabicToRoman(9)).toBe('IX');
         expect(arabicToRoman(15)).toBe('XV');
@@ -93,7 +94,7 @@ describe('arabicToRoman function', () => {
         expect(arabicToRoman(2000)).toBe('MM');
     });
 
-    test('Convierte números decimales complejos a números romanos correctamente', () => {
+    test('Convierte números arábigos complejos a números romanos correctamente', () => {
         expect(arabicToRoman(13)).toBe('XIII');
         expect(arabicToRoman(39)).toBe('XXXIX');
         expect(arabicToRoman(42)).toBe('XLII');
@@ -125,82 +126,35 @@ describe('arabicToRoman function', () => {
     });
 });
 
-// Números decimales a arábigos y viceversa
-describe('Conversión de dígitos decimales a arábigos', () => {
-  test('decimalToArabic convierte correctamente', () => {
-    expect(decimalToArabic(5)).toBe('٥');
-    expect(decimalToArabic(67)).toBe('٦٧');
-    expect(decimalToArabic(109)).toBe('١٠٩');
-    expect(decimalToArabic(248)).toBe('٢٤٨');
-    expect(decimalToArabic(490)).toBe('٤٩٠');
-    expect(decimalToArabic(743)).toBe('٧٤٣');
-    expect(decimalToArabic(885)).toBe('٨٨٥');
-    expect(decimalToArabic(1457)).toBe('١٤٥٧');
-    expect(decimalToArabic(2110)).toBe('٢١١٠');
-    expect(decimalToArabic(3499)).toBe('٣٤٩٩');
-  });
-
-  test('arabicToDecimal analiza y convierte a número decimal correctamente', () => {
-    expect(arabicToDecimal('٣')).toBe(3);
-    expect(arabicToDecimal('٣٩')).toBe(39);
-    expect(arabicToDecimal('٩٥')).toBe(95);
-    expect(arabicToDecimal('٢٦٧')).toBe(267);
-    expect(arabicToDecimal('٣٩٢')).toBe(392);
-    expect(arabicToDecimal('٧٥٨')).toBe(758);
-    expect(arabicToDecimal('٩٢١')).toBe(921);
-    expect(arabicToDecimal('١٥٤٠')).toBe(1540);
-    expect(arabicToDecimal('٢٢٠٩')).toBe(2209);
-    expect(arabicToDecimal('٣٣١٣')).toBe(3313);
-  });
-
-  test('arabicToDecimal retorna NaN para entradas inválidas', () => {
-    expect(arabicToDecimal('ABC')).toBeNaN();
-    expect(arabicToDecimal('')).toBeNaN();
-    expect(arabicToDecimal('null')).toBeNaN();
-    expect(arabicToDecimal('undefined')).toBeNaN();
-  });
-});
-
-
 // Integración completa de las funciones de conversión
 describe('Integración de funciones de conversión completa', () => {
   const testCases = [
-    { roman: 'I', decimal: 1  , arabic: '١' },              
-    { roman: 'XVIII', decimal: 18  , arabic: '١٨' },         
-    { roman: 'CC', decimal: 200  , arabic: '٢٠٠' },           
-    { roman: 'CCCLV', decimal: 355  , arabic: '٣٥٥' },        
-    { roman: 'DCCCXLIII', decimal: 843  , arabic: '٨٤٣' },    
-    { roman: 'MCCXXXIX', decimal: 1239  , arabic: '١٢٣٩' },    
-    { roman: 'MDCXLV', decimal: 1645  , arabic: '١٦٤٥' },      
-    { roman: 'MDCCCXLII', decimal: 1842  , arabic: '١٨٤٢' },   
-    { roman: 'MMCDLXXXI', decimal: 2481  , arabic: '٢٤٨١' },   
-    { roman: 'MMCMX', decimal: 2910  , arabic: '٢٩١٠' },       
-    { roman: 'MMMCCLIV', decimal: 3254  , arabic: '٣٢٥٤' },    
-    { roman: 'MMMCMXCIX', decimal: 3999  , arabic: '٣٩٩٩' }    
+    { roman: 'I', arabic: 1 },              
+    { roman: 'XVIII', arabic: 18 },         
+    { roman: 'CC', arabic: 200 },           
+    { roman: 'CCCLV', arabic: 355 },        
+    { roman: 'DCCCXLIII', arabic: 843 },    
+    { roman: 'MCCXXXIX', arabic: 1239 },    
+    { roman: 'MDCXLV', arabic: 1645 },      
+    { roman: 'MDCCCXLII', arabic: 1842 },   
+    { roman: 'MMCDLXXXI', arabic: 2481 },   
+    { roman: 'MMCMX', arabic: 2910 },       
+    { roman: 'MMMCCLIV', arabic: 3254 },    
+    { roman: 'MMMCMXCIX', arabic: 3999 }    
   ];
 
-  testCases.forEach(({ roman, decimal, arabic }) => {
-    test(`Convierte ${roman} a ${decimal} a ${arabic} y viceversa correctamente`, () => {
-      // De romano a decimal
-      const toDecimal = romanToArabic(roman); // puede resultar confuso por el nombre de la función
-      expect(toDecimal).toBe(decimal);
-
-      // De decimal a arábigo
-      const toArabic = decimalToArabic(toDecimal);
+  testCases.forEach(({ roman, arabic }) => {
+    test(`Convierte ${roman} ${arabic} y viceversa correctamente`, () => {
+      // De romano a arábigo
+      const toArabic = romanToArabic(roman);
       expect(toArabic).toBe(arabic);
 
-      // De arábigo a decimal
-      const fromDecimal = arabicToDecimal(arabic)
-      expect(fromDecimal).toBe(decimal);
-
-      // De decimal a romano
-      const toRoman = arabicToRoman(fromDecimal);
+      // De arábigo a romano
+      const toRoman = arabicToRoman(arabic);
       expect(toRoman).toBe(roman);
 
-      expect(romanToArabic(toRoman)).toBe(decimal);
-      expect(decimalToArabic(romanToArabic(toRoman))).toBe(arabic);
-      expect(arabicToDecimal(decimalToArabic(decimal))).toBe(decimal);
-      expect(arabicToRoman(arabicToDecimal(toArabic))).toBe(roman);
+      expect(romanToArabic(toRoman)).toBe(arabic);
+      expect(arabicToRoman(toArabic)).toBe(roman);
     });
   });
 });
