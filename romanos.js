@@ -26,8 +26,13 @@ app.get('/r2a', (req, res) => {
 
 // Arabigos a Romanos
 app.get('/a2r', (req, res) => {
-  const arabicNumber = parseInt(req.query.arabic, 10);
-  if (isNaN(arabicNumber)) {
+  const arabicParam = req.query.arabic;
+  if (!arabicParam) {
+    return res.status(400).json({ error: 'Parametro arabic requerido.' });
+  }
+  // Se añadió validación regex necesario porque parseInt acepta strings con caracteres no numéricos al final
+  const arabicNumber = parseInt(arabicParam, 10);
+  if (isNaN(arabicNumber) || !/^\d+$/.test(arabicParam)) {
     return res.status(400).json({ error: 'Numero arabic requerido.' });
   }
 
@@ -36,10 +41,6 @@ app.get('/a2r', (req, res) => {
   }
 
   const romanNumeral = arabicToRoman(arabicNumber);
-  if (romanNumeral === null) {
-    return res.status(400).json({ error: 'Numero arabigo invalido.' });
-  }
-  
   return res.json({ roman: romanNumeral });
 });
 
