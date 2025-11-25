@@ -11,14 +11,14 @@ app.get('/r2a', (req, res) => {
 
   const arabicNumber = romanToArabic(romanNumeral);
   if (arabicNumber === null) {
-    return res.status(422).json({ error: 'Numero romano invalido.' });
+    return res.status(400).json({ error: 'Numero romano invalido.' });
   }
 
   if (arabicNumber <= 0 || arabicNumber >= 4000) {
     return res.status(400).json({ error: 'Numero romano fuera de rango (1-3999).' });
   }
 
-  return res.json({ arabic: decimalToArabic(arabicNumber)});
+  return res.json({ arabic: arabicNumber });
 });
 
 // Arabigos a Romanos
@@ -29,7 +29,7 @@ app.get('/a2r', (req, res) => {
   }
 
     if (arabicNumber <= 0 || arabicNumber >= 4000) {
-    return res.status(422).json({ error: 'Numero arabico fuera de rango (1-3999).' });
+    return res.status(400).json({ error: 'Numero arabico fuera de rango (1-3999).' });
   }
 
   const romanNumeral = arabicToRoman(arabicNumber);
