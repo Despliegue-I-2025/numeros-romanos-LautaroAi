@@ -15,18 +15,15 @@ app.get('/r2a', (req, res) => {
   }
 
   if (arabicNumber <= 0 || arabicNumber >= 4000) {
-    return res.status(400).json({
-      error: 'Numero romano fuera de rango (1-3999).',
-      arabic: convertDecimalToArabic(arabicNumber)
-      });
+    return res.status(400).json({ error: 'Numero romano fuera de rango (1-3999).' });
   }
 
-  return res.json({ arabic: convertDecimalToArabic(arabicNumber)});
+  return res.json({ arabic: decimalToArabic(arabicNumber)});
 });
 
 // Arabigos a Romanos
 app.get('/a2r', (req, res) => {
-  const arabicNumber = parseArabicToDecimal(req.query.arabic);
+  const arabicNumber = arabicToDecimal(req.query.arabic);
   if (isNaN(arabicNumber)) {
     return res.status(400).json({ error: 'Parametro arabic requerido.' });
   }
@@ -72,14 +69,14 @@ const arabicToDecimalMap = {
   '٩': '9'
 };
 
-function convertDecimalToArabic(decimal) {
+function decimalToArabic(decimal) {
   return decimal.toString().split('')
     .map(digit => decimalToArabicMap[digit])
     .join('');
 }
 
 // Ahora está un poco más claro y acotado (intuitivo)
-function parseArabicToDecimal(arabicString) {
+function arabicToDecimal(arabicString) {
   if (!arabicString || typeof arabicString !== 'string') return NaN;
 
   const decimalString = arabicString.split('')
@@ -134,4 +131,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { app, romanToArabic, arabicToRoman, parseArabicToDecimal, convertDecimalToArabic };
+module.exports = { app, romanToArabic, arabicToRoman, arabicToDecimal, decimalToArabic };
