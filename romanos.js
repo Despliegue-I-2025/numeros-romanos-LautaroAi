@@ -21,25 +21,26 @@ app.get('/r2a', (req, res) => {
     return res.status(400).json({ error: 'Numero romano fuera de rango (1-3999).' });
   }
 
-  return res.json({ arabic: decimalToArabic(arabicNumber)});
+  return res.json({ arabic:arabicNumber });
 });
 
 // Arabigos a Romanos
 app.get('/a2r', (req, res) => {
-  const arabicNumber = arabicToDecimal(req.query.arabic);
-  if (isNaN(arabicNumber)) {
+  const arabicParam = req.query.arabic;
+  if (!arabicParam) {
     return res.status(400).json({ error: 'Parametro arabic requerido.' });
   }
 
-    if (arabicNumber <= 0 || arabicNumber >= 4000) {
+  const arabicNumber = arabicToDecimal(arabicParam);
+  if (isNaN(arabicNumber)) {
+    return res.status(400).json({ error: 'Numero arabico requerido.' });
+  }
+
+  if (arabicNumber <= 0 || arabicNumber >= 4000) {
     return res.status(400).json({ error: 'Numero arabico fuera de rango (1-3999).' });
   }
 
   const romanNumeral = arabicToRoman(arabicNumber);
-  if (romanNumeral === null) {
-    return res.status(400).json({ error: 'Numero arabico invalido.' });
-  }
-
   return res.json({ roman: romanNumeral });
 });
 
