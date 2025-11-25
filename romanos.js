@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -18,7 +18,7 @@ app.get('/r2a', (req, res) => {
     return res.status(400).json({ error: 'Numero romano fuera de rango (1-3999).' });
   }
 
-  return res.json({ arabic: arabicNumber });
+  return res.json({ arabic: decimalToArabic(arabicNumber)});
 });
 
 // Arabigos a Romanos
